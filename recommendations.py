@@ -3,7 +3,7 @@ My first official dive into artificial intelligence and machine learning.
 Wish me luck!
 """
 __author__ = 'Benedict Chen (benedict@benedictchen.com)'
-from math import sqrt
+import math
 
 # A dictionary of movie critics and their ratings of a small
 # set of movies
@@ -61,7 +61,7 @@ def sim_pearson(prefs, person1, person2):
     """Calculates the similarity between two people using a Pearson
     algorithm, which corrects for 'grade inflation'.  Grade inflation
     is when one person gives higher ratings across the board than the
-    other.
+    other. http://en.wikipedia.org/wiki/Pearson_product-moment_correlation_coefficient
 
     Args:
         prefs: A nested dictionary of people and their preferences.
@@ -72,4 +72,34 @@ def sim_pearson(prefs, person1, person2):
         A floating point number that represents the distance of similarity between
         the two people.
     """
-    pass
+    # Get the list of mutually rated items.
+    shared_items = {}
+    for item in prefs[person1]:
+        if item in prefs[person2]:
+            shared_items[item] = 1
+
+    # Find the number of elements.
+    n = len(shared_items)
+
+    # If nothing in common, return 0
+    if n == 0: return 0
+
+    # Add up all the preferences.
+    sum1 = sum([prefs[person1][item] for item in shared_items])
+    sum2 = sum([prefs[person2][item] for item in shared_items])
+
+    # Sum up the squares.
+    sum1_sq = sum([pow(prefs[person1][item] ,2) for item in shared_items])
+    sum2_sq = sum([pow(prefs[person2][item] ,2) for item in shared_items])
+
+    # Sum up the products.
+    product_sum = sum([prefs[person1][item]*prefs[person2][item]
+                 for item in shared_items])
+
+    # Calculate the Pearson score.
+    num = product_sum - (sum1 * sum2 / n)
+    den = math.sqrt((sum1_sq - pow(sum1, 2)/n) *
+                    (sum2_sq - pow(sum2, 2)/n))
+    if den == 0: return 0
+    return num/den
+
