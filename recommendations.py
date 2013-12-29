@@ -103,3 +103,24 @@ def sim_pearson(prefs, person1, person2):
     if den == 0: return 0
     return num/den
 
+
+def get_top_matches(prefs, person, n=5, similarity=sim_pearson):
+    """
+    Finds the top matches for a given person in similarity.
+
+    Args:
+        prefs: A nested dictionary of people and their preferences.
+        person: A string containing the first person to compare.
+        n: The amount of matches to return.
+        similarity: The algorithm used to calculate simiarity.
+
+    Return:
+        A list of tuples containing scores and names of matched people..
+    """
+    scores = [(similarity(prefs, person, person2), person2)
+              for person2 in prefs if person2 != person]
+    # Sort the result so we have the highest rated showing first.
+    scores.sort()
+    scores.reverse()
+    return scores[0:n]
+
