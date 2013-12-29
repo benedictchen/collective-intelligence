@@ -37,9 +37,9 @@ class TestRecommendations(unittest.TestCase):
                                    'Toby': 1.0, 'Gene Seymour': 3.5}
         }
         results = recommendations.transform_preferences(recommendations.critics)
+        # Round to 2 places.
         for person in results:
             for movie in results[person]:
                 results[person][movie] = round(results[person][movie], 2)
-        self.maxDiff = None
         self.assertDictEqual(results, expected_results)
 

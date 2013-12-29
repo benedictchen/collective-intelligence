@@ -30,7 +30,6 @@ critics = {'Lisa Rose': {'Lady in the Water': 2.5, 'Snakes on a Plane': 3.5,
            }
   }
 
-
 def sim_distance(prefs, person1, person2):
   """Calculates the similarity distance between two people, based on
   Euclidian distance.
@@ -56,7 +55,6 @@ def sim_distance(prefs, person1, person2):
       for item in prefs[person1] if item in prefs[person2]
     ])
   return 1 / (1+sum_of_squares)
-
 
 def sim_pearson(prefs, person1, person2):
     """Calculates the similarity between two people using a Pearson
@@ -104,7 +102,6 @@ def sim_pearson(prefs, person1, person2):
     if den == 0: return 0
     return num/den
 
-
 def get_top_matches(prefs, person, n=5, similarity=sim_pearson):
     """
     Finds the top matches for a given person in similarity.
@@ -124,7 +121,6 @@ def get_top_matches(prefs, person, n=5, similarity=sim_pearson):
     scores.sort()
     scores.reverse()
     return scores[0:n]
-
 
 def get_recommendations(prefs, person, similarity=sim_pearson):
     """Gets recommendations for a person using a weighted average
@@ -163,7 +159,6 @@ def get_recommendations(prefs, person, similarity=sim_pearson):
     rankings.sort()
     rankings.reverse()
     return rankings
-
 
 def transform_preferences(prefs):
     """Inverts the preferences so that a given movie has a collection of critics
