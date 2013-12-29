@@ -32,7 +32,8 @@ critics = {'Lisa Rose': {'Lady in the Water': 2.5, 'Snakes on a Plane': 3.5,
 
 
 def sim_distance(prefs, person1, person2):
-  """Calculates the similarity distance between two people.
+  """Calculates the similarity distance between two people, based on
+  Euclidian distance.
 
   Args:
     prefs: A nested dictionary of people and their preferences.
@@ -164,4 +165,21 @@ def get_recommendations(prefs, person, similarity=sim_pearson):
     return rankings
 
 
+def transform_preferences(prefs):
+    """Inverts the preferences so that a given movie has a collection of critics
+    and their respective scores for each movie.
+
+    Args:
+        prefs: A dictionary of movie critics and scores for each movie.
+
+    Returns:
+        An inverted dictionary with movies with critics and scores.
+    """
+    result = {}
+    for person in prefs:
+        for item in prefs[person]:
+            result.setdefault(item, {})
+            # Flip the item and person.
+            result[item][person] = prefs[person][item]
+    return result
 
