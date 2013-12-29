@@ -4,6 +4,7 @@ A del.icio.us recommender from Collective Intelligence.
 __author__ = 'Benedict Chen (benedict@benedictchen.com)'
 
 import pydelicious
+import time
 
 
 def initialize_user_dict(tag, count=5):
@@ -24,14 +25,20 @@ def initialize_user_dict(tag, count=5):
             user_dict[user] = {}
     return user_dict
 
+
 def fill_items(user_dict):
+    """Queries del.icio.us and grabs all a user's links. Modifies the provided
+    dictionary and fills it out with the links retrieved from the request.
+
+    Args:
+        user_dict: A dictionary with usernames as keys and empty dicts.
+    """
     all_items = {}
     # Find links posted by all users.
     for user in user_dict:
-        for i in range(3):
+        for _ in range(3):
             try:
                 posts = pydelicious.get_userposts(user)
-                print posts
                 break
             except:
                 print "Failed user " + user + ", retrying."
