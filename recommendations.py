@@ -189,8 +189,16 @@ def transform_preferences(prefs):
 
 
 def calculate_similar_items(prefs, n=10):
-    result = {}
+    """
+    Finds similar items for each item in a collection.
 
+    Args:
+        prefs: A dictionary of movie critics and scores for each movie.
+
+    Returns:
+        A dictionary of items with closely related items.
+    """
+    result = {}
     # Invert the preference matrix to be item centric.
     item_prefs = transform_preferences(prefs)
     count = 10
@@ -204,3 +212,31 @@ def calculate_similar_items(prefs, n=10):
                                  n=n, similarity=sim_distance)
         result[item] = scores
     return result
+
+
+def get_recommended_items(prefs, item_match, user):
+    """
+    """
+    user_ratings = prefs[user]
+    scores = {}
+    total_similar = {}
+    # Loop over the items rated by this user.
+    for item, rating in user_ratings.items():
+        # Loop over items similar to this one.
+        for similarity_score, item2 in item_match[item]:
+            # Ignore if user already rated the item.
+            if item2 in user_ratings:
+                continue
+            # Weighted sum of ratings * similarity.
+            scores.setdefault(item2, 0)
+            scores[item2] += similarity_score * rating
+            # Sum of all similarities.
+            total_similar.setdefault(item2, 0)
+            total_similar[item2] += similarity_score
+    # Divide each total score by total weighting to get an average.
+    rankings = [(score / total_similar[item], item)
+                for item, score in scores.items()]
+    # Return the rankings from highest to lowest.
+    rankings.sort()
+    rankings.reverse()
+    return rankings
