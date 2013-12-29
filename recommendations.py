@@ -1,8 +1,8 @@
 """
-My first official dive into artificial intelligence and machine learning.
-Wish me luck!
+A collection of basic similarity functions from Collective Intelligence.
 """
 __author__ = 'Benedict Chen (benedict@benedictchen.com)'
+
 import math
 
 # A dictionary of movie critics and their ratings of a small
