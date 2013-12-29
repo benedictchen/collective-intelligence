@@ -63,10 +63,13 @@ def sim_pearson(prefs, person1, person2):
     is when one person gives higher ratings across the board than the
     other.
 
+    Args:
+        prefs: A nested dictionary of people and their preferences.
+        person1: A string containing the first person to compare.
+        person2: A string containing the second person to compare.
 
+    Return:
+        A floating point number that represents the distance of similarity between
+        the two people.
     """
-
-
-
-
-
+    pass
