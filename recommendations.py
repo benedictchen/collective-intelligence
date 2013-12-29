@@ -186,3 +186,19 @@ def transform_preferences(prefs):
             # Flip the item and person.
             result[item][person] = prefs[person][item]
     return result
+
+def calculate_similar_items(prefs, n=10):
+    result = {}
+
+    # Invert the preference matrix to be item centric.
+    item_prefs = transform_preferences(prefs)
+    count = 10
+    for item in item_prefs:
+        # Status updates for large datasets.
+        count += 1
+        if count % 100 == 0:
+            print "%d / %d" % (count, len(item_prefs))
+        # Find the most similar items to this one.
+        scores = get_top_matches(item_prefs, item, n=n, similarity=sim_distance)
+        result[item] = scores
+    return result
