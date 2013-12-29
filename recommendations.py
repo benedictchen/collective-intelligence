@@ -215,7 +215,15 @@ def calculate_similar_items(prefs, n=10):
 
 
 def get_recommended_items(prefs, item_match, user):
-    """
+    """Finds recommended items ordered by highest rating.
+
+    Args:
+        prefs: A dictionary of users/critics and scores for each item.
+        item_match: A dictionary of items and their closely related items.
+        user: A string containing a given user in the collection(s).
+
+    Returns:
+        A list of tuples formatted as (score, item).
     """
     user_ratings = prefs[user]
     scores = {}
